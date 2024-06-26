@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SalesWebAPITutorialEM.Models;
 
@@ -15,6 +17,9 @@ public class Order
     //[Column(TypeName= "DateTime")]
     public DateTime Date { get; set; }
 
+    [Column(TypeName = "decimal(7,2)")]
+    public decimal Total { get; set; }
+    
     
     [StringLength(30)]
     public string? Description { get; set; } = string.Empty; //can be null, add ? to type to indicate this property can be null
