@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SalesWebAPITutorialEM.Data;
 
@@ -11,9 +12,11 @@ using SalesWebAPITutorialEM.Data;
 namespace SalesWebAPITutorialEM.Migrations
 {
     [DbContext(typeof(AppdBContext))]
-    partial class AppdBContextModelSnapshot : ModelSnapshot
+    [Migration("20240626180541_employee table creation")]
+    partial class employeetablecreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,27 +82,6 @@ namespace SalesWebAPITutorialEM.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("SalesWebAPITutorialEM.Models.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ItemDescription")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<decimal>("ItemPrice")
-                        .HasColumnType("decimal(7,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Items");
-                });
-
             modelBuilder.Entity("SalesWebAPITutorialEM.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -130,32 +112,6 @@ namespace SalesWebAPITutorialEM.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SalesWebAPITutorialEM.Models.OrderLine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderLines");
-                });
-
             modelBuilder.Entity("SalesWebAPITutorialEM.Models.Order", b =>
                 {
                     b.HasOne("SalesWebAPITutorialEM.Models.Customer", "Customer")
@@ -163,25 +119,6 @@ namespace SalesWebAPITutorialEM.Migrations
                         .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("SalesWebAPITutorialEM.Models.OrderLine", b =>
-                {
-                    b.HasOne("SalesWebAPITutorialEM.Models.Item", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SalesWebAPITutorialEM.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

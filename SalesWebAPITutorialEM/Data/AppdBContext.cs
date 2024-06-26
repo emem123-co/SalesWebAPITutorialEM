@@ -16,5 +16,8 @@ namespace SalesWebAPITutorialEM.Data
 
         public DbSet<Customer> Customers { get; set; } = default!; 
         public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<Employee> Employees { get; set; } = default!;
+        public DbSet<Item> Items { get; set; } = default!;
+        public DbSet<OrderLine> OrderLines { get; set; } = default!;
     }
 }
