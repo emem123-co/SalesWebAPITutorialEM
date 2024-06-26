@@ -15,5 +15,6 @@ namespace SalesWebAPITutorialEM.Data
         } //no default constructor or "OnConfiguring" present because this is a Web Api app and those are only needed with console apps.
 
         public DbSet<Customer> Customers { get; set; } = default!; 
+        public DbSet<Order> Orders { get; set; } = default!;
     }
 }
