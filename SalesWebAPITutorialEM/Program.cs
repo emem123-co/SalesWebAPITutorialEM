@@ -13,7 +13,7 @@ public class Program
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<AppdBContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("AppdBContext")//automatically added when you add conroller and dBContext classes.
+            options.UseSqlServer(builder.Configuration.GetConnectionString("AppdBContext")//automatically added when you add conroller and dBContext classes.114
             ?? throw new InvalidOperationException("Connection string 'AppdBContext' not found."))); 
 
         var app = builder.Build();

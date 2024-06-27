@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SalesWebAPITutorialEM.Data;
 using SalesWebAPITutorialEM.Models;
 
+
 namespace SalesWebAPITutorialEM.Controllers
 {
     [Route("api/[controller]")]
@@ -54,7 +55,30 @@ namespace SalesWebAPITutorialEM.Controllers
             order.Status = "SHIPPED";
             return await PutOrder(id, order);//calling the PutOrder method already created below, passing through the same parameters we recieved in the ShippedOrder method. Asking the ShippedOrder method to return whatever the PutOrder method returns. Added "await" because it is an async method. 
         }
+    //PUT SUM into Total: api/Orders/total/{id}
+        [HttpPut("total/{id}")]
+        public async Task<IActionResult> PutOrder(OrderLine orderline, Item item, Order order)
+        {
+        var orderJoin = from oL in _context.OrderLines
+	                    join o in _context.Orders on oL.OrderId equals o.Id
+	                    join i in _context.Items on oL.ItemId equals i.Id
+                        select new
+                        {
+                            oL.Quantity,
+                            o.Id,
+                            i.ItemPrice
+                        };
+        
+        decimal orderTotal =+ (Convert.ToDecimal(orderline.Quantity) * item.ItemPrice);
+        
+        order.Total = orderTotal;
+        
+        await _context.SaveChangesAsync();
 
+        //return orderTotal = order.Total;
+
+        }
+    
     //PUT new info using order ID: api/Orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
